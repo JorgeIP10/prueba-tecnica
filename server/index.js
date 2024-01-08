@@ -1,5 +1,8 @@
 import express from 'express';
 import settings from './settings.js';
+import { db } from './models/connection.js';
+
+db.connect();
 
 const app = express();
 
