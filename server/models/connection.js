@@ -8,7 +8,7 @@ class Database {
   connect() {
     const connection = new sqlite3.Database('./rapimoney-db.db', sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
-        console.log(err.message);
+        console.error(err.message);
       } else {
         console.log('Servidor conectado a la base de datos...');
       }
