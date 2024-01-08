@@ -11,6 +11,26 @@ class CustomersController {
     }
   }
 
+  async getByDni (req, res) {
+    try {
+      const client = await customer.getByDni(req.params.dni);
+      console.log(`DNI del cliente obtenido: ${client.dni}`);
+      res.json(client);
+    } catch (error) {
+      console.error(error); 
+    }
+  }
+
+  async getByName (req, res) {
+    try {
+      const client = await customer.getByName(req.params.name);
+      console.log(`Nombre del cliente obtenido: ${client.nombres}`);
+      res.json(client);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async createOne (req, res) {
     try {
       const newClient = await customer.createOne(req.body);
