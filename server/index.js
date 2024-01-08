@@ -9,8 +9,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api/clientes', customersRouter);
+app.use('/api/customers', customersRouter);
 
 app.listen(settings.port, () => {
-  console.log(`Servidor escuchando en el puerto ${settings.port}`);
+  console.log(`Server listening on port ${settings.port}`);
 });

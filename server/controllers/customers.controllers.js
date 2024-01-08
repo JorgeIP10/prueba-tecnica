@@ -3,9 +3,9 @@ import { customer } from "../models/customers.models.js";
 class CustomersController {
   async getAll (req, res) {
     try {
-      const clients = await customer.getAll();
-      console.log(`Clientes obtenidos...`);
-      return res.json(clients);
+      const customers = await customer.getAll();
+      console.log(`Customers were found...`);
+      return res.json(customers);
 
     } catch (error) {
       console.error(error); 
@@ -15,17 +15,17 @@ class CustomersController {
 
   async getByDni (req, res) {
     try {
-      const client = await customer.getByDni(req.params.dni);
+      const requestedCustomer = await customer.getByDni(req.params.dni);
 
-      if (client) {
-        console.log(`DNI del cliente obtenido: ${client.dni}`);
-        return res.json(client);
+      if (requestedCustomer) {
+        console.log(`Customer DNI found: ${requestedCustomer.dni}`);
+        return res.json(requestedCustomer);
       }
 
-      console.log('El cliente con el DNI solicitado no se encuentra registrado...');
+      console.log('Customer with DNI requested has not been found...');
 
-      // Codigo 404 para recurso no encontrado
-      return res.status(404).json({message: 'Error, el cliente no ha sido encontrado'});
+      // Code 404 for resource not found
+      return res.status(404).json({message: 'Error, customer has not been found'});
 
     } catch (error) {
       console.error(error);
@@ -35,17 +35,17 @@ class CustomersController {
 
   async getByName (req, res) {
     try {
-      const client = await customer.getByName(req.params.name);
+      const requestedCustomer = await customer.getByName(req.params.name);
 
-      if (client) {
-        console.log(`Nombre del cliente obtenido: ${client.nombres}`);
-        return res.json(client);
+      if (requestedCustomer) {
+        console.log(`Name of the customer found: ${requestedCustomer.nombres}`);
+        return res.json(requestedCustomer);
       }
 
-      console.log('El cliente solicitado no se encuentra registrado...');
+      console.log('The requested customer is not registered...');
 
-      // Codigo 404 para recurso no encontrado
-      return res.status(404).json({message: 'Error, el cliente no ha sido encontrado'});
+      // Code 404 for resource not found
+      return res.status(404).json({message: 'Error, customer has not been found'});
 
     } catch (error) {
       console.error(error);
@@ -55,23 +55,24 @@ class CustomersController {
 
   async createOne (req, res) {
     try {
-      const newClient = await customer.createOne(req.body);
-      console.log(`DNI del nuevo cliente: ${newClient.lastID}`);
+      const newCustomer = await customer.createOne(req.body);
+      console.log(`DNI of the new customer: ${newCustomer.lastID}`);
 
-      // Codigo 201 para recurso creado
-      return res.status(201).json(newClient);
+      // Code 201 for the created resource
+      return res.status(201).json(newCustomer);
 
     } catch (error) {
       console.error(error);
 
-      // Error por DNI repetido
+      // Error due to repeated DNI
       if (error && error.code === 'SQLITE_CONSTRAINT' && error.errno === 19) {
-        // Codigo 409 para indicar conflicto con el estado actual del recurso
-        return res.status(409).json({ message: 'Error, el DNI ya está en uso.' });
+        // Code 409 to indicate conflict with the current state of the resource
+        console.log('Error, the DNI is already in use');
+        return res.status(409).json({ message: 'Error, the DNI is already in use.' });
       }
 
-      // Para otros errores
-      return res.status(500).json({ message: 'Error interno del servidor.' });
+      // For another errors
+      return res.status(500).json({ message: 'Internal server error.' });
       }
   }
 }

@@ -10,7 +10,7 @@ class Database {
       if (err) {
         console.error(err.message);
       } else {
-        console.log('Servidor conectado a la base de datos...');
+        console.log('Server connected to database...');
       }
     });
     this.connection = connection;
@@ -21,7 +21,7 @@ class Database {
       if (err) {
         return console.error(err.message);
       }
-      console.log('Conexion finalizada.');
+      console.log('The connection has finished.');
     });
   }
 }

@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/', customersController.getAll);
 router.get('/dni/:dni', customersController.getByDni);
-router.get('/nombre/:name', customersController.getByName);
+router.get('/name/:name', customersController.getByName);
 router.post('/', validateSchema(registerSchema), customersController.createOne);
 
 export default router;
