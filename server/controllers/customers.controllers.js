@@ -68,7 +68,7 @@ class CustomersController {
       if (error && error.code === 'SQLITE_CONSTRAINT' && error.errno === 19) {
         // Code 409 to indicate conflict with the current state of the resource
         console.log('Error, the DNI is already in use');
-        return res.status(409).json({ message: 'Error, the DNI is already in use.' });
+        return res.status(409).json({ message: 'Error, the DNI is already in use.', type: 'repeatedDni' });
       }
 
       // For another errors

@@ -13,6 +13,7 @@ export function CustomerProvider({ children }) {
       return result;
     } catch (error) {
       console.error(error);
+      return error;
     }
   };
 
@@ -23,6 +24,7 @@ export function CustomerProvider({ children }) {
       return result;
     } catch (error) {
       console.error(error);
+      return error;
     }
   };
 

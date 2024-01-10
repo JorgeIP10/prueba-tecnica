@@ -15,7 +15,7 @@ export default function CustomerForm() {
 
 	const myHandleSubmit = async (values) => {
 		try {
-			const newCustomer = await createCustomer({
+			const result = await createCustomer({
 				dni: parseInt(values.dni),
 				names: values.names,
 				surnames: values.surnames,
@@ -25,12 +25,22 @@ export default function CustomerForm() {
 				bank: values.bank,
 				numberCCI: values.numberCCI,
 			});
-			if (newCustomer) {
-				const result = await getCustomers();
-				console.log(result);
+			if (result.data) {
+				const customers = await getCustomers();
+				console.log(customers);
+			} else {
+				console.log('error');
+				if (result.response.data.types) {
+					for (const error of result.response.data.types) {
+						console.log(error);
+					}
+				} else {
+					console.log(result.response.data.message);
+					console.log(result.response.data.type);
+				}
 			}
 		} catch (error) {
-			console.error(error);
+				console.error(error);
 		}
 	}
 	
@@ -62,6 +72,8 @@ export default function CustomerForm() {
 						{...register("dni", { required: true })}
 					/>
 					<TextField
+						error
+						helperText='aña'
 						label="Nombres"
 						name="names"
 						{...register("names", { required: true })}
