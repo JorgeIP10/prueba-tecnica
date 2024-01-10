@@ -10,7 +10,7 @@ db.connect();
 const app = express();
 
 app.use(express.json(), morgan('dev'), cors({
-  origin: 'http://localhost:5173'
+  origin: settings.clientUrl
 }));
 
 app.use('/api/customers', customersRouter);
