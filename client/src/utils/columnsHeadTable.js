@@ -1,0 +1,46 @@
+export const columns = [
+  { id: 'dni', label: 'DNI', minWidth: 170, align: 'center'},
+  { id: 'names', label: 'Nombres', minWidth: 100, align: 'center'},
+  {
+    id: 'surnames',
+    label: 'Apellidos',
+    minWidth: 170,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'birthDate',
+    label: 'Fecha de nacimiento',
+    minWidth: 110,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'cellPhone',
+    label: 'Celular',
+    minWidth: 170,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'email',
+    label: 'Correo',
+    minWidth: 250,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'bank',
+    label: 'Banco',
+    minWidth: 200,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'numberCCI',
+    label: 'Número de cuenta o CCI',
+    minWidth: 200,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+];
