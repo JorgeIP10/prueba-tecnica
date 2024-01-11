@@ -26,13 +26,6 @@ export default function CustomerForm() {
 		}
 	}, [getCustomers]);
 
-	const handleChange = () => (e) => {
-		if (errors[e.target.name]) {
-			handleChangeError(e.target.name, false);
-			handleHelperText(e.target.name, '');
-		}
-	};
-
 	const handleChangeError = (fieldName, value) => {
 		setErrors((prevErrors) => ({
 			...prevErrors,
@@ -45,6 +38,13 @@ export default function CustomerForm() {
 			...prevHelperTexts,
 			[fieldName]: helperText,
 		}));
+	};
+
+	const handleChange = () => (e) => {
+		if (errors[e.target.name]) {
+			handleChangeError(e.target.name, false);
+			handleHelperText(e.target.name, '');
+		}
 	};
 
 	const myHandleSubmit = async (values) => {

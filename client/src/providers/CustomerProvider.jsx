@@ -4,6 +4,7 @@ import { getCustomersRequest, createCustomerRequest } from "../../api/customers"
 
 export function CustomerProvider({ children }) {
   const [customers, setCustomers] = useState([]);
+  const [customer, setCustomer] = useState({});
 
   const getCustomers = async () => {
     try {
@@ -17,6 +18,7 @@ export function CustomerProvider({ children }) {
     }
   };
 
+  
   const createCustomer = async (customer) => {
     try {
       const result = await createCustomerRequest(customer);
@@ -28,12 +30,35 @@ export function CustomerProvider({ children }) {
     }
   };
 
+  const getCustomerbyDni = async () => {
+    try {
+      console.log('Getting customer by DNI');
+      return;
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  };
+
+  const getCustomerbyName = async () => {
+    try {
+      console.log('Getting customer by name');
+      return;
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  };
+  
   return (
     <CustomerContext.Provider
       value={{
         customers,
         getCustomers,
         createCustomer,
+        customer,
+        getCustomerbyDni,
+        getCustomerbyName,
       }}
     >
       {children}
