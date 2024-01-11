@@ -1,12 +1,12 @@
 import TextField from "@mui/material/TextField";
-import { customTheme } from '../themes/inputTheme'
+import { customTheme } from '../../themes/inputTheme'
 import Box from "@mui/material/Box";
 import { ThemeProvider, useTheme } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
-import { useCustomers } from "../contexts/CustomerContext";
+import { useCustomers } from "../../contexts/CustomerContext";
 import Button from '@mui/material/Button';
 import { useEffect, useRef, useState } from "react";
-import { initialErrorValues, initialHelperTextValues, createCustomerTemplate } from "../utils/customerFormUtils";
+import { initialErrorValues, initialHelperTextValues, createCustomerTemplate } from "../../utils/customerFormUtils";
 
 export default function CustomerForm() {
 	const outerTheme = useTheme();

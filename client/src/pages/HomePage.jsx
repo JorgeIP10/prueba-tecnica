@@ -1,11 +1,16 @@
-import CustomerForm from "../components/CustomerForm";
-import StickyHeadTable from '../components/StickyHeadTable'
+import BaseTemplate from "../components/BaseTemplate";
+import CustomerForm from "../components/homePage/CustomerForm";
+import StickyHeadTable from "../components/homePage/StickyHeadTable";
 
 function HomePage() {
   return (
     <>
-    <CustomerForm/>
-    <StickyHeadTable/>
+    <BaseTemplate content={
+      <>
+        <CustomerForm />
+        <StickyHeadTable />
+      </>
+    }/>
     </>
   )
 }

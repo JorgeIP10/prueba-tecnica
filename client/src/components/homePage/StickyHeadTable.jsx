@@ -7,10 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { useCustomers } from '../contexts/CustomerContext';
+import { useCustomers } from '../../contexts/CustomerContext';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
-import { columns } from '../utils/columnsHeadTable';
+import { columns } from '../../utils/columnsHeadTable';
 
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
@@ -28,8 +28,8 @@ export default function StickyHeadTable() {
 
   return (
     <>
-    <Card style={{backgroundColor: '#565C60', display: 'grid', justifyContent: 'center', alignItems: 'center', alignContent: 'center', height: '100%'}} className='mt-10 mb-3'>
-      <Typography variant="h3" gutterBottom className='text-slate-300 pt-3'>
+    <Card style={{backgroundColor: '#0d47a1', display: 'grid', justifyContent: 'center', alignItems: 'center', alignContent: 'center', height: '100%'}} className='mt-10 mb-3'>
+      <Typography variant="h3" gutterBottom className='text-slate-200 pt-3'>
           Clientes registrados
       </Typography>
     </Card>
@@ -42,14 +42,14 @@ export default function StickyHeadTable() {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth, background: 'gray', color: 'whitesmoke' }}
+                    style={{ minWidth: column.minWidth, background: '#1565c0', color: 'whitesmoke' }}
                   >
                     {column.label}
                   </TableCell>
                 ))}
               </TableRow>
             </TableHead>
-            <TableBody className='bg-zinc-400'>
+            <TableBody style={{backgroundColor: '#64b5f6'}}>
               {customers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
@@ -79,7 +79,7 @@ export default function StickyHeadTable() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          style={{background: 'gray', color: 'whitesmoke'}}
+          style={{background: '#1565c0', color: 'whitesmoke'}}
         />
       </Paper>
     </>
