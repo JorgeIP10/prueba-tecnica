@@ -19,7 +19,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset', backgroundColor: '#0d47a1', color: 'whitesmoke' } }}>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset', backgroundColor: '#0d47a1'} }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -30,7 +30,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{row.label}</TableCell>
+        <TableCell style={{color: 'white'}}>{row.label}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: '#202020', color: 'whitesmoke' }} colSpan={2}>
@@ -65,15 +65,14 @@ Row.propTypes = {
   }).isRequired,
 };
 
-export default function HorizontalTable({ row, rows }) {
+export default function HorizontalTable({ rows }) {
   return (
     <TableContainer component={Paper} className='mt-10'>
       <Table aria-label="collapsible table">
         <TableBody>
-        <Row key={row.label} row={{ ...row, rows: rows }} />
-          {/* {row.value && rows.map((rowData) => (
-            <Row key={rowData.label} row={{ ...row, rows: rows }} />
-          ))} */}
+          {rows.map((rowData, index) => (
+            <Row key={index} row={rowData} />
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

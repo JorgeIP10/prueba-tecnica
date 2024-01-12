@@ -41,10 +41,11 @@ export function CustomerProvider({ children }) {
     }
   };
 
-  const getCustomerbyName = async () => {
+  const getCustomerByName = async (name) => {
     try {
-      console.log('Getting customer by name');
-      return;
+      const result = await getCustomerByNameRequest(name);
+      console.log('Customer has been found');
+      return result;
     } catch (error) {
       console.error(error);
       return error;
@@ -59,7 +60,7 @@ export function CustomerProvider({ children }) {
         createCustomer,
         customer,
         getCustomerByDni,
-        getCustomerbyName,
+        getCustomerByName,
       }}
     >
       {children}

@@ -7,17 +7,15 @@ import { useState } from "react";
 import Button from '@mui/material/Button';
 import HorizontalTable from "./HorizontalTable";
 import Alert from '@mui/material/Alert';
-import { useCustomers } from "../../contexts/CustomerContext";
 
-function SearchByDNI() {
+function SearchByField({findFunction, labelNameObject}) {
   const outerTheme = useTheme();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState(false);
   const [notFoundError, setNotFoundError] = useState(false);
   const [helperText, setHelperText] = useState('');
-  const [rows, setRows] = useState({ label: 'Ver cliente', value: 'No se ha buscado un cliente' });
+  const [rows, setRows] = useState({});
 	const [customerData, setCustomerData] = useState([]);
-	const { getCustomerByDni, getCustomerByName } = useCustomers();
 
   const handleChange = () => (e) => {
     if (error) {
@@ -28,37 +26,42 @@ function SearchByDNI() {
 
   const myHandleSubmit = async (values) => {
     try {
-			console.log('inicio del try')
-			const result = await getCustomerByDni(values.dni);
-			console.log(result)
-			console.log('antes del if')
-			if (result.data) {
-				setRows({ label: 'Ver cliente', value: 'Cliente encontrado' });
-				setCustomerData([
-					{ label: 'DNI', value: result.data.dni },
-					{ label: 'Nombres', value: result.data.nombres },
-					{ label: 'Apellidos', value: result.data.apellidos },
-					{ label: 'Fecha de nacimiento', value: result.data.fecha_nacimiento },
-					{ label: 'Celular', value: result.data.celular },
-					{ label: 'Correo', value: result.data.correo },
-					{ label: 'Banco', value: result.data.banco },
-					{ label: 'Número de cuenta o CCI', value: result.data.numero_cci },
-				]);
-
-				setError(false);
-				setNotFoundError(false);
-				console.log(error)
-				return;
-			}
-
-			console.log(error)
-
-			setError(true);
-			setHelperText(result.response.data.error);
-			if (result.response.data.error === 'Error, customer has not been found') setNotFoundError(true);
-			console.log(error)
-			return;
-
+      const result = await findFunction(values.field);
+  
+      if (result.response) {
+        setError(true);
+  
+        if (result.response.data.error === 'Error, customer has not been found') {
+          setNotFoundError(true);
+          return;
+        }
+  
+        setHelperText(result.response.data.error);
+        return;
+      }
+  
+      const customerDataArray = result.data.map((customer) => ({
+        label: 'Ver cliente',
+        value: 'Cliente encontrado',
+        rows: [
+          { label: 'DNI', value: customer.dni },
+          { label: 'Nombres', value: customer.nombres },
+          { label: 'Apellidos', value: customer.apellidos },
+          { label: 'Fecha de nacimiento', value: customer.fecha_nacimiento },
+          { label: 'Celular', value: customer.celular },
+          { label: 'Correo', value: customer.correo },
+          { label: 'Banco', value: customer.banco },
+          { label: 'Número de cuenta o CCI', value: customer.numero_cci },
+        ],
+      }));
+  
+      setCustomerData(customerDataArray);
+      setRows(customerDataArray);
+      setError(false);
+      setNotFoundError(false);
+  
+      return;
+  
     } catch (error) {
       console.error(error);
     }
@@ -76,8 +79,8 @@ function SearchByDNI() {
       >
         <ThemeProvider theme={customTheme(outerTheme)}>
           <TextField
-            label="DNI" name="dni" error={error} helperText={helperText}
-            onChangeCapture={handleChange()} {...register("dni", { required: true })}
+            label={labelNameObject.label} name={labelNameObject.name} error={error} helperText={helperText}
+            onChangeCapture={handleChange()} {...register("field", { required: true })}
           />
           <Button type="submit" variant="contained">Buscar</Button>
         </ThemeProvider>
@@ -87,9 +90,8 @@ function SearchByDNI() {
 		{notFoundError ? 
 			<><Alert severity="error" className="mt-10">El cliente no fue encontrado.</Alert></>
 		: <HorizontalTable row={rows} rows={customerData} />}
-
 		</>
   );
 }
 
-export default SearchByDNI;
+export default SearchByField;

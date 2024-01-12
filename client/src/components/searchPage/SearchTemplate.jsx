@@ -37,7 +37,7 @@ function a11yProps(index) {
   };
 }
 
-export default function SearchTemplate({searchByDNIComponent, searchByNameComponent}) {
+export default function SearchTemplate({SearchByDNIComponent, SearchByNameComponent}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -53,16 +53,16 @@ export default function SearchTemplate({searchByDNIComponent, searchByNameCompon
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        {searchByDNIComponent}
+        {SearchByDNIComponent}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        {searchByNameComponent}
+        {SearchByNameComponent}
       </CustomTabPanel>
     </Box>
   );
 }
 
 SearchTemplate.propTypes = {
-  searchByDNIComponent: PropTypes.node.isRequired,
-  searchByNameComponent: PropTypes.node.isRequired,
+  SearchByDNIComponent: PropTypes.node.isRequired,
+  SearchByNameComponent: PropTypes.node.isRequired
 };
