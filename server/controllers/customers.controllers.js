@@ -25,11 +25,11 @@ class CustomersController {
       console.log('Customer with DNI requested has not been found...');
 
       // Code 404 for resource not found
-      return res.status(404).json({message: 'Error, customer has not been found'});
+      return res.status(404).json({error: 'Error, customer has not been found'});
 
     } catch (error) {
       console.error(error);
-      return res.json({message: 'Error'});
+      return res.json({error: 'Error'});
     }
   }
 
@@ -45,7 +45,7 @@ class CustomersController {
       console.log('The requested customer is not registered...');
 
       // Code 404 for resource not found
-      return res.status(404).json({message: 'Error, customer has not been found'});
+      return res.status(404).json({error: 'Error, customer has not been found'});
 
     } catch (error) {
       console.error(error);

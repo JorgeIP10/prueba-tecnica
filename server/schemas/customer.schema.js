@@ -51,6 +51,11 @@ export const registerSchema = z.object({
   })
 });
 
+export const findByDNISchema = z.string({required_error: "DNI is required"})
+    .refine((value) => /^\d{8}$/.test(value), {
+      message: 'DNI must be 8 digits.',
+    })
+
 export const loginSchema = z.object({
   dni: z
     .number({
