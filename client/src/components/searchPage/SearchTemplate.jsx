@@ -45,7 +45,7 @@ export default function SearchTemplate({searchByDNIComponent, searchByNameCompon
   };
 
   return (
-    <Box sx={{ width: '100%', height: '100vh', maxHeight: '800px' }}>
+    <Box sx={{ width: '100%'}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Buscar por DNI" {...a11yProps(0)} style={{color: 'white'}} />

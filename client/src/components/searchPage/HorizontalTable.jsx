@@ -13,21 +13,6 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-const customerData = [
-  { label: 'DNI', value: '123' },
-  { label: 'Nombres', value: 'Ejemplo 1' },
-  { label: 'Apellidos', value: 'Ejemplo 2' },
-  { label: 'Fecha de nacimiento', value: 'Ejemplo 3' },
-  { label: 'Celular', value: 'Ejemplo 4' },
-  { label: 'Correo', value: 'Ejemplo 5' },
-  { label: 'Banco', value: 'Ejemplo 6' },
-  { label: 'Número de cuenta o CCI', value: 'Ejemplo 7' },
-];
-
-const rows = [
-  { label: 'Ver cliente', value: 'Cliente encontrado' },
-];
-
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -40,7 +25,7 @@ function Row(props) {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
-            style={{color: '#64b5f6'}}
+            style={{color: 'white'}}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -56,7 +41,7 @@ function Row(props) {
               </Typography>
               <Table size="small" aria-label="customer details">
                 <TableBody>
-                  {customerData.map((customerRow) => (
+                  {row.rows.map((customerRow) => (
                     <TableRow style={{backgroundColor: '#303030'}} key={customerRow.label}>
                       <TableCell style={{color: 'whitesmoke'}}>{customerRow.label}</TableCell>
                       <TableCell style={{color: 'whitesmoke'}} align="left">{customerRow.value}</TableCell>
@@ -76,17 +61,19 @@ Row.propTypes = {
   row: PropTypes.shape({
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
+    rows: PropTypes.array.isRequired,
   }).isRequired,
 };
 
-export default function CollapsibleTable() {
+export default function HorizontalTable({ row, rows }) {
   return (
     <TableContainer component={Paper} className='mt-10'>
       <Table aria-label="collapsible table">
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.label} row={row} />
-          ))}
+        <Row key={row.label} row={{ ...row, rows: rows }} />
+          {/* {row.value && rows.map((rowData) => (
+            <Row key={rowData.label} row={{ ...row, rows: rows }} />
+          ))} */}
         </TableBody>
       </Table>
     </TableContainer>

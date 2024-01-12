@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CustomerContext } from "../contexts/CustomerContext";
-import { getCustomersRequest, createCustomerRequest } from "../../api/customers";
+import { getCustomersRequest, createCustomerRequest, getCustomerByDniRequest, getCustomerByNameRequest } from "../../api/customers";
 
 export function CustomerProvider({ children }) {
   const [customers, setCustomers] = useState([]);
@@ -30,10 +30,11 @@ export function CustomerProvider({ children }) {
     }
   };
 
-  const getCustomerbyDni = async () => {
+  const getCustomerByDni = async (dni) => {
     try {
-      console.log('Getting customer by DNI');
-      return;
+      const result = await getCustomerByDniRequest(dni);
+      console.log('Customer has been found');
+      return result;
     } catch (error) {
       console.error(error);
       return error;
@@ -57,7 +58,7 @@ export function CustomerProvider({ children }) {
         getCustomers,
         createCustomer,
         customer,
-        getCustomerbyDni,
+        getCustomerByDni,
         getCustomerbyName,
       }}
     >

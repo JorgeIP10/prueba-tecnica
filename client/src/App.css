@@ -4,6 +4,7 @@
   padding: 2rem;
   text-align: center;
   background-color: #202020;
+  min-height: 800px;
   width: 100%;
   color: white;
 }
