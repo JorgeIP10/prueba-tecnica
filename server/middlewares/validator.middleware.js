@@ -13,7 +13,8 @@ export const validateSchema = (schema) => (req, res, next) => {
 
 export const validateFindSchema = (schema) => (req, res, next) => {
   try {
-    schema.parse(req.params.dni);
+    const value = Object.values(req.params)[0];
+    schema.parse(value);
     next();
   } catch (error) {
     console.log(error.errors)

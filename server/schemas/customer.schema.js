@@ -11,7 +11,7 @@ export const registerSchema = z.object({
       message: "DNI must be 8 digits.",
     }),
   names: z.string({
-    required_error: "Names is a field required"
+    required_error: "Names is a required field"
   }),
   surnames: z.string({
     required_error: "Surnames is a required field"
@@ -26,7 +26,7 @@ export const registerSchema = z.object({
     }),
   cellPhone: z
     .string({
-      required_error: "Cellphone is a field required"
+      required_error: "Cellphone is a required field"
     })
     // To validate a cellphone number
     .refine((data) => /^9\d{8}$/.test(data), {
@@ -45,16 +45,18 @@ export const registerSchema = z.object({
   numberCCI: z.string({
     required_error: "NumberCCI is required"
   })
-  // To validate a card number or CCI
-  .refine((data) => /^\d{16}$|^\d{20}$/.test(data), {
-    message: "NumberCCI must be 16 or 20 digits.",
-  })
+    // To validate a card number or CCI
+    .refine((data) => /^\d{16}$|^\d{20}$/.test(data), {
+      message: "NumberCCI must be 16 or 20 digits.",
+    })
 });
 
-export const findByDNISchema = z.string({required_error: "DNI is required"})
-    .refine((value) => /^\d{8}$/.test(value), {
-      message: 'DNI must be 8 digits.',
-    })
+export const findByDNISchema = z.string({ required_error: "DNI is required" })
+  .refine((value) => /^\d{8}$/.test(value), {
+    message: 'DNI must be 8 digits.',
+  })
+
+export const findByNameSchema = z.string({ required_error: "Names is a required field" })
 
 export const loginSchema = z.object({
   dni: z
@@ -66,7 +68,7 @@ export const loginSchema = z.object({
     .refine((number) => number >= 10000000 && number <= 99999999, {
       message: "DNI must be 8 digits.",
     }),
-    email: z
+  email: z
     .string({
       required_error: "Email is required",
     })

@@ -21,7 +21,7 @@ class Customer {
         if (err) {
           reject(err);
         } else {
-          resolve(rows[0]);
+          resolve(rows);
         }
       });
     });
@@ -35,7 +35,8 @@ class Customer {
         if (err) {
           reject(err);
         } else {
-          resolve(rows[0]);
+          console.log(rows)
+          resolve(rows);
         }
       });
     });

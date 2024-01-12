@@ -17,8 +17,8 @@ class CustomersController {
     try {
       const requestedCustomer = await customer.getByDni(req.params.dni);
 
-      if (requestedCustomer) {
-        console.log(`Customer DNI found: ${requestedCustomer.dni}`);
+      if (requestedCustomer.length != 0) {
+        console.log(`Customer DNI found: ${requestedCustomer[0].dni}`);
         return res.json(requestedCustomer);
       }
 
@@ -37,8 +37,8 @@ class CustomersController {
     try {
       const requestedCustomer = await customer.getByName(req.params.name);
 
-      if (requestedCustomer) {
-        console.log(`Name of the customer found: ${requestedCustomer.nombres}`);
+      if (requestedCustomer.length != 0) {
+        console.log(`There are ${requestedCustomer.length} customers with name ${requestedCustomer[0].nombres}`);
         return res.json(requestedCustomer);
       }
 
