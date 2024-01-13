@@ -13,7 +13,7 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors({origin: settings.clientUrl}));
+app.use(cors({origin: settings.clientUrl, credentials: true}));
 app.use(cookieParser());
 
 app.use('/api/customers', customersRouter);

@@ -8,10 +8,13 @@ export const login = async (req, res) => {
     const { dni, email } = req.body;
     let customerFound = await customer.getByDni(dni);
 
-    if (customerFound.length === 0)
+    if (customerFound.length === 0) {
+      console.log('The customer has not registered');
+
       return res.status(400).json({
         message: ["The customer has not registered"],
       });
+    }
 
     customerFound = customerFound[0];
     if (email != customerFound.correo) {
@@ -26,12 +29,13 @@ export const login = async (req, res) => {
     });
 
     res.cookie("token", token, {
-      httpOnly: false,
-      // secure: true,
+      httpOnly: true,
+      secure: true,
       sameSite: "none",
     });
 
-    res.json({
+
+    return res.json({
       dni: customerFound.dni,
       email: customerFound.correo,
     });
@@ -59,7 +63,6 @@ export const verifyToken = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  console.log('logout')
   res.cookie("token", "", {
     httpOnly: false,
     // secure: true,
