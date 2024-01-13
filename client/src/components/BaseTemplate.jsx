@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,15 +14,27 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const drawerWidth = 240;
-const navItems = [
-  { label: 'Inicio', path: '/' },
-  { label: 'Buscar cliente', path: '/search' }
-];
 
-function BaseTemplate({ window, content }) {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+const BaseTemplate = ({ window, content }) => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { isAuthenticated, user } = useAuth();
+  const initialNavItems = [
+    { label: 'Inicio', path: '/' },
+    { label: 'Buscar cliente', path: '/search' }
+  ];
+  const [navItems, setNavItems] = useState(initialNavItems);
+
+  useEffect(() => {
+    if (isAuthenticated && !navItems.some(item => item.label === 'Cerrar sesión')) {
+      setNavItems([...initialNavItems, { label: 'Perfil', path: '/profile' }, { label: 'Cerrar sesión', path: '/logout' }]);
+
+    }
+
+    if (!isAuthenticated) setNavItems([...initialNavItems, { label: 'Iniciar sesión', path: '/login' }]);
+  }, [isAuthenticated]);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -50,7 +62,7 @@ function BaseTemplate({ window, content }) {
 
   return (
     <Box>
-      <CssBaseline/>
+      <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
           <IconButton
@@ -62,6 +74,18 @@ function BaseTemplate({ window, content }) {
           >
             <MenuIcon />
           </IconButton>
+          {user ?
+          <>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            RAPIMONEY - {user.dni}
+          </Typography>
+          </>
+          :
+          <>
           <Typography
             variant="h6"
             component="div"
@@ -69,6 +93,8 @@ function BaseTemplate({ window, content }) {
           >
             RAPIMONEY
           </Typography>
+          </>
+          }
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item.label} sx={{ color: '#fff' }}>
@@ -89,19 +115,19 @@ function BaseTemplate({ window, content }) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth},
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
           {drawer}
         </Drawer>
       </nav>
-      <Box component="main" >
+      <Box component="main">
         <Toolbar />
         {content}
       </Box>
     </Box>
   );
-}
+};
 
 BaseTemplate.propTypes = {
   window: PropTypes.func,

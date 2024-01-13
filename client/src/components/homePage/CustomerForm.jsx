@@ -7,6 +7,7 @@ import { useCustomers } from "../../contexts/CustomerContext";
 import Button from '@mui/material/Button';
 import { useEffect, useRef, useState } from "react";
 import { initialErrorValues, initialHelperTextValues, createCustomerTemplate } from "../../utils/customerFormUtils";
+import { Alert } from "@mui/material";
 
 export default function CustomerForm() {
 	const outerTheme = useTheme();
@@ -15,6 +16,7 @@ export default function CustomerForm() {
 	const onFirstLoad = useRef(true);
 	const [errors, setErrors] = useState(initialErrorValues);
 	const [helperTexts, setHelperTexts] = useState(initialHelperTextValues);
+	const [success, setSuccess] = useState(false);
 
 	useEffect(() => {
 		const firstGetCustomers = async () => {
@@ -51,20 +53,26 @@ export default function CustomerForm() {
 		try {
 			const result = await createCustomer(createCustomerTemplate(values));
 
-			if (result.data) return await getCustomers();
+			if (result.data) {
+				setSuccess(true);
+				await getCustomers();
+				return;
+			} 
 
 			if (result.response.data.errors) {
 				Object.entries(result.response.data.errors).forEach(([key, value]) => {
 					handleChangeError(key, true);
 					handleHelperText(key, value);
+					setSuccess(false);
 				});
-
+				
 				return;
 			}
 
 			// For errors due to repeated DNI
 			handleChangeError('dni', true);
 			handleHelperText('dni', result.response.data.message);
+			setSuccess(false);
 			return;
 
 		} catch (error) {
@@ -119,6 +127,7 @@ export default function CustomerForm() {
 					<Button type="submit" variant="contained" className="col-span-2">Registrar</Button>
 				</ThemeProvider>
 			</Box>
+			{success ? <Alert severity="success" className="mt-10">El cliente fue registrado.</Alert> : null}
 		</form>
 	);
 }
