@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { CustomerContext } from "../contexts/CustomerContext";
-import { getCustomersRequest, createCustomerRequest, getCustomerByDniRequest, getCustomerByNameRequest } from "../../api/customers";
+import { getCustomersRequest, createCustomerRequest, getCustomerByDniRequest, getCustomerByNameRequest } from "../api/customers";
 
 export function CustomerProvider({ children }) {
   const [customers, setCustomers] = useState([]);
-  const [customer, setCustomer] = useState({});
 
   const getCustomers = async () => {
     try {
@@ -58,7 +57,6 @@ export function CustomerProvider({ children }) {
         customers,
         getCustomers,
         createCustomer,
-        customer,
         getCustomerByDni,
         getCustomerByName,
       }}
